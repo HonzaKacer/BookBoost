@@ -38,3 +38,6 @@ jobs:
           git add state.json state_bazos.json
           git diff --cached --quiet || git commit -m "Update state [skip ci]"
           git push
+
+          - name: Test hash porovnání
+        run: python test_hash.py
