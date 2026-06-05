@@ -6,12 +6,18 @@ import io
 import json
 import os
 
+
 # -------------------------
 # Nastavení
 # -------------------------
 REFERENCE_IMAGE = "cover.png"
-HASH_THRESHOLD = 15        # 0 = identické, 64 = zcela jiné; doporučuju začít na 15
-BAZOS_SEARCH_URL = "https://www.bazos.cz/search.php?hledat=pruning+gilman&rubriky=www&hlokalita=&humkreis=25&cenaod=&cenado=&Submit=Hledat&kitx=ano"
+HASH_THRESHOLD = 15        # 0 = identické, 64 = zcela jiné
+BAZOS_SEARCH_URL = (
+    "https://www.bazos.cz/search.php"
+    "?hledat=pruning+gilman&rubriky=www"
+    "&hlokalita=&humkreis=25&cenaod=&cenado="
+    "&Submit=Hledat&kitx=ano"
+)
 EMAIL_TO = "mandoral@seznam.cz"
 STATE_FILE = "state_bazos.json"
 
@@ -53,7 +59,6 @@ def get_bazos_listings():
 
     listings = []
     for item in soup.find_all("div", class_="inzeraty"):
-        # Název a odkaz
         title_tag = item.find("h2")
         if not title_tag:
             continue
@@ -66,13 +71,11 @@ def get_bazos_listings():
         if not url.startswith("http"):
             url = "https://www.bazos.cz" + url
 
-        # Obrázek náhledu
         img_tag = item.find("img")
         img_url = img_tag["src"] if img_tag and "src" in img_tag.attrs else None
         if img_url and not img_url.startswith("http"):
             img_url = "https://www.bazos.cz" + img_url
 
-        # Cena
         price_tag = item.find("div", class_="inzeratycena")
         price_text = price_tag.text.strip() if price_tag else "?"
 
@@ -87,7 +90,7 @@ def get_bazos_listings():
 
 
 # -------------------------
-# Porovnání obrázku inzerátu s obálkou
+# Porovnání obrázku s obálkou
 # -------------------------
 def image_matches(img_url, ref_hash, threshold=HASH_THRESHOLD):
     if not img_url:
