@@ -10,7 +10,7 @@ import os
 # -------------------------
 # Nastavení
 # -------------------------
-REFERENCE_IMAGE = "cover.png"
+REFERENCE_IMAGE = "cover.jpg"
 HASH_THRESHOLD = 15        # 0 = identické, 64 = zcela jiné
 BAZOS_SEARCH_URL = (
     "https://www.bazos.cz/search.php"
