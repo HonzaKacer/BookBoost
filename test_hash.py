@@ -55,11 +55,11 @@ def get_cover_image_url(offer_url):
     )
     soup = BeautifulSoup(response.text, "html.parser")
 
-    # AbeBooks má obrázek obálky v <img id="main-image"> nebo itemprop="image"
     for selector in [
+        {"id": "isbn-image"},
+        {"class": "gallery-hero"},
         {"id": "main-image"},
         {"itemprop": "image"},
-        {"class": "book-image"},
     ]:
         img = soup.find("img", selector)
         if img and img.get("src"):
